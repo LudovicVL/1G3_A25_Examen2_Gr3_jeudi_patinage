@@ -8,23 +8,26 @@ def valider_notes(notes: list[float]) -> bool:
     :param notes: liste de notes
     :returns: vrai si la liste et valide, sinon faux.
     """
-    if len(notes) < 9:
+    if len(notes) < 9 or len(notes) > 9:
         return False
 
     for n in notes:
-        if n > 3:
+        if -3 > n > 3:
             return False
 
-    return True
+    else:
+        return True
 
 
 def calculer_points(vbase: float, notes: list[float]) -> float:
     """
-    Calcule la note finale d’un mouvement.
-    :param vbase: valeur de base de la note
-    :param notes: liste de notes
-    :returns: valeur de la note finale
-    """
+        Calcule le total des points pour un mouvement de patinage.
+        Paramètres :
+            vbase (float) : valeur de base du mouvement
+            notes (list[int]) : 9 notes des juges (valeurs entre -3 et 3)
+        Retourne :
+            float : total des points (vbase + moyenne des notes restantes)
+        """
     try:
         valider_notes(notes)
 
@@ -35,11 +38,11 @@ def calculer_points(vbase: float, notes: list[float]) -> float:
             if notes[i] == note_max or note_min:
                 notes.remove(notes[i])
 
-        moyenne = sum(notes) / 9
+        moyenne = sum(notes) / len(notes)
         total = vbase + moyenne
         return total
 
-    except ValueError:
+    except IndexError:
         print("Erreur")
         return 0
 
